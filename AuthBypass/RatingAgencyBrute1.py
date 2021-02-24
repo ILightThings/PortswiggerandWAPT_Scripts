@@ -22,7 +22,7 @@ def makeReq(name='',password='',method=0):
 	if r.text.find("Login failed ") == -1 :
 		print(f"Found username: {name} and Password: {password} code: {r.text.find('invalid')}")
 
-def passguess(rname): # THIS ONE THING FIXES A PROBLEM I ALMOST KILLED MYSELF OVER
+def passguess(rname): # Fuction is needed if you are doing multiple user and password guesses at a the same time.
 	for line in password:
 		makeReq(name=rname,password=line)
 
