@@ -29,7 +29,7 @@ def makeReq(name='',password='',method=""):
 		found_combo.append(f"{name}:{password}")
 
 
-def passguess(password): # THIS ONE THING FIXES A PROBLEM I ALMOST KILLED MYSELF OVER
+def passguess(password): 
 	for line in found_names:
 		makeReq(name=line,password=password,method="password_method")
 
