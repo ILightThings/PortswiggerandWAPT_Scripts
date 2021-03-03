@@ -12,3 +12,4 @@ echo $2 > $file_path/cred.txt
 echo $3 >> $file_path/cred.txt
 
 echo "auth-user-pass cred.txt" >> $1
+openvpn $1
